@@ -23662,8 +23662,8 @@ SparqlParser.parser = (function(){
       }
       
       function parse_STRING_LITERAL_LONG1() {
-        var result0, result1, result2;
-        var pos0, pos1;
+        var result0, result1, result2, result3;
+        var pos0, pos1, pos2;
         
         reportFailures++;
         pos0 = pos;
@@ -23679,28 +23679,94 @@ SparqlParser.parser = (function(){
         }
         if (result0 !== null) {
           result1 = [];
-          if (/^[^'\\]/.test(input.charAt(pos))) {
-            result2 = input.charAt(pos);
+          pos2 = pos;
+          if (input.charCodeAt(pos) === 39) {
+            result2 = "'";
             pos++;
           } else {
             result2 = null;
             if (reportFailures === 0) {
-              matchFailed("[^'\\\\]");
+              matchFailed("\"'\"");
             }
+          }
+          if (result2 === null) {
+            if (input.substr(pos, 2) === "''") {
+              result2 = "''";
+              pos += 2;
+            } else {
+              result2 = null;
+              if (reportFailures === 0) {
+                matchFailed("\"''\"");
+              }
+            }
+          }
+          result2 = result2 !== null ? result2 : "";
+          if (result2 !== null) {
+            if (/^[^']/.test(input.charAt(pos))) {
+              result3 = input.charAt(pos);
+              pos++;
+            } else {
+              result3 = null;
+              if (reportFailures === 0) {
+                matchFailed("[^']");
+              }
+            }
+            if (result3 !== null) {
+              result2 = [result2, result3];
+            } else {
+              result2 = null;
+              pos = pos2;
+            }
+          } else {
+            result2 = null;
+            pos = pos2;
           }
           if (result2 === null) {
             result2 = parse_ECHAR();
           }
           while (result2 !== null) {
             result1.push(result2);
-            if (/^[^'\\]/.test(input.charAt(pos))) {
-              result2 = input.charAt(pos);
+            pos2 = pos;
+            if (input.charCodeAt(pos) === 39) {
+              result2 = "'";
               pos++;
             } else {
               result2 = null;
               if (reportFailures === 0) {
-                matchFailed("[^'\\\\]");
+                matchFailed("\"'\"");
               }
+            }
+            if (result2 === null) {
+              if (input.substr(pos, 2) === "''") {
+                result2 = "''";
+                pos += 2;
+              } else {
+                result2 = null;
+                if (reportFailures === 0) {
+                  matchFailed("\"''\"");
+                }
+              }
+            }
+            result2 = result2 !== null ? result2 : "";
+            if (result2 !== null) {
+              if (/^[^']/.test(input.charAt(pos))) {
+                result3 = input.charAt(pos);
+                pos++;
+              } else {
+                result3 = null;
+                if (reportFailures === 0) {
+                  matchFailed("[^']");
+                }
+              }
+              if (result3 !== null) {
+                result2 = [result2, result3];
+              } else {
+                result2 = null;
+                pos = pos2;
+              }
+            } else {
+              result2 = null;
+              pos = pos2;
             }
             if (result2 === null) {
               result2 = parse_ECHAR();
@@ -23744,8 +23810,8 @@ SparqlParser.parser = (function(){
       }
       
       function parse_STRING_LITERAL_LONG2() {
-        var result0, result1, result2;
-        var pos0, pos1;
+        var result0, result1, result2, result3;
+        var pos0, pos1, pos2;
         
         reportFailures++;
         pos0 = pos;
@@ -23761,28 +23827,94 @@ SparqlParser.parser = (function(){
         }
         if (result0 !== null) {
           result1 = [];
-          if (/^[^"\\]/.test(input.charAt(pos))) {
-            result2 = input.charAt(pos);
+          pos2 = pos;
+          if (input.charCodeAt(pos) === 34) {
+            result2 = "\"";
             pos++;
           } else {
             result2 = null;
             if (reportFailures === 0) {
-              matchFailed("[^\"\\\\]");
+              matchFailed("\"\\\"\"");
             }
+          }
+          if (result2 === null) {
+            if (input.substr(pos, 2) === "\"\"") {
+              result2 = "\"\"";
+              pos += 2;
+            } else {
+              result2 = null;
+              if (reportFailures === 0) {
+                matchFailed("\"\\\"\\\"\"");
+              }
+            }
+          }
+          result2 = result2 !== null ? result2 : "";
+          if (result2 !== null) {
+            if (/^[^"]/.test(input.charAt(pos))) {
+              result3 = input.charAt(pos);
+              pos++;
+            } else {
+              result3 = null;
+              if (reportFailures === 0) {
+                matchFailed("[^\"]");
+              }
+            }
+            if (result3 !== null) {
+              result2 = [result2, result3];
+            } else {
+              result2 = null;
+              pos = pos2;
+            }
+          } else {
+            result2 = null;
+            pos = pos2;
           }
           if (result2 === null) {
             result2 = parse_ECHAR();
           }
           while (result2 !== null) {
             result1.push(result2);
-            if (/^[^"\\]/.test(input.charAt(pos))) {
-              result2 = input.charAt(pos);
+            pos2 = pos;
+            if (input.charCodeAt(pos) === 34) {
+              result2 = "\"";
               pos++;
             } else {
               result2 = null;
               if (reportFailures === 0) {
-                matchFailed("[^\"\\\\]");
+                matchFailed("\"\\\"\"");
               }
+            }
+            if (result2 === null) {
+              if (input.substr(pos, 2) === "\"\"") {
+                result2 = "\"\"";
+                pos += 2;
+              } else {
+                result2 = null;
+                if (reportFailures === 0) {
+                  matchFailed("\"\\\"\\\"\"");
+                }
+              }
+            }
+            result2 = result2 !== null ? result2 : "";
+            if (result2 !== null) {
+              if (/^[^"]/.test(input.charAt(pos))) {
+                result3 = input.charAt(pos);
+                pos++;
+              } else {
+                result3 = null;
+                if (reportFailures === 0) {
+                  matchFailed("[^\"]");
+                }
+              }
+              if (result3 !== null) {
+                result2 = [result2, result3];
+              } else {
+                result2 = null;
+                pos = pos2;
+              }
+            } else {
+              result2 = null;
+              pos = pos2;
             }
             if (result2 === null) {
               result2 = parse_ECHAR();
@@ -24768,6 +24900,7 @@ SparqlParser.parser = (function(){
   
   return result;
 })();
+
 // end of ./src/js-sparql-parser/src/sparql_parser.js 
 // exports
 var RDFJSInterface = {};
@@ -25144,13 +25277,32 @@ RDFJSInterface.Literal = function(value, language, datatype) {
 Utils['extends'](RDFJSInterface.RDFNode,RDFJSInterface.Literal);
 
 RDFJSInterface.Literal.prototype.toString = function(){
-    var tmp = '"'+this.nominalValue+'"';
+    if(this.nominalValue.match("\n")) {
+        var tmp = '"""'+this.nominalValue+'"""';
+        if(this.nominalValue.match(/"""/)) {
+            var tmp = "'''"+this.nominalValue+"'''";
+        }
+    } else {
+        if(this.nominalValue.match(/"/)) {
+            var tmp = "'"+this.nominalValue+"'";
+            if(this.nominalValue.match(/'/)) {
+                var tmp = '"""'+this.nominalValue+'"""';
+                if(this.nominalValue.match(/"""/)) {
+                    var tmp = "'''"+this.nominalValue+"'''";
+                    if(this.nominalValue.match(/'''/)) {
+                        throw "Literal not possible to escape in a String.";
+                    }
+                }
+            }
+        } else {
+            var tmp = '"'+this.nominalValue+'"';
+        }
+    };
     if(this.language != null) {
         tmp = tmp + "@" + this.language;
     } else if(this.datatype != null || this.type) {
         tmp = tmp + "^^<" + (this.datatype||this.type) + ">";
     }
-
     return tmp;
 };
 
@@ -31108,8 +31260,8 @@ Store.Store.prototype.insert = function() {
     var callback;
     if(arguments.length === 1) {
         triples = arguments[0];
+        callback= function(){};
     } else if(arguments.length === 2) {
-        graph = this.rdf.createNamedNode(this.engine.lexicon.defaultGraphUri);
         triples = arguments[0];
         callback= arguments[1] || function(){};
     } else if(arguments.length === 3) {
@@ -31129,7 +31281,7 @@ Store.Store.prototype.insert = function() {
     if(graph != null) {
         query = "INSERT DATA { GRAPH " + this._nodeToQuery(graph) +" { "+ query + " } }";
     } else {
-        query = "INSERT DATA { " + this._nodeToQuery(graph) +" { "+ query + " }";
+        query = "INSERT DATA { "+ query + " }";
     }
 
     this.engine.execute(query, callback);
@@ -31143,14 +31295,7 @@ Store.Store.prototype._nodeToQuery = function(term) {
         } else {
             return "<" + term.valueOf() + ">";
         }
-    } else if(term.interfaceName === '') {
-        return term.toString();
     } else {
-        if(term.lang != null) {
-            return "\""+term.valueOf()+"\"@"+term.lang;
-        } else if(term.datatype != null) {
-            return "\""+term.valueOf()+"\"^^<"+term.datatype+">";
-        }
         return term.toString();
     }
 };
@@ -31179,8 +31324,8 @@ Store.Store.prototype['delete'] = function() {
     var callback;
     if(arguments.length === 1) {
         triples = arguments[0];
+        callback= function(){};
     } else if(arguments.length === 2) {
-        graph = this.rdf.createNamedNode(this.engine.lexicon.defaultGraphUri);
         triples = arguments[0];
         callback= arguments[1] || function(){};
     } else if(arguments.length === 3) {
@@ -31200,7 +31345,7 @@ Store.Store.prototype['delete'] = function() {
     if(graph != null) {
         query = "DELETE DATA { GRAPH " + this._nodeToQuery(graph) +" { "+ query + " } }";
     } else {
-        query = "DELETE DATA { " + this._nodeToQuery(graph) +" { "+ query + " }";
+        query = "DELETE DATA { "+ query + " }";
     }
 
     this.engine.execute(query, callback);
@@ -31420,22 +31565,6 @@ Store.Store.prototype.registeredGraphs = function(callback) {
         }
      
         return callback(true, acum);    
-    }
-};
-
-/** @private */
-Store.Store.prototype._nodeToQuery = function(term) {
-    if(term.interfaceName === 'NamedNode') {
-        var resolvedUri = this.rdf.resolve(term.valueOf());
-        if(resolvedUri != null) {
-            return "<" + resolvedUri + ">";
-        } else {
-            return "<" + term.valueOf() + ">";
-        }
-    } else if(term.interfaceName === '') {
-        return term.toString();
-    } else {
-        return term.toString();
     }
 };
 
