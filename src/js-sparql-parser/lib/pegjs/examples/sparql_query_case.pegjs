@@ -2394,11 +2394,16 @@ VAR2 "[127] VAR2"
 */
 LANGTAG "[128] LANGTAG"
   = '@' a:[a-zA-Z]+ b:('-' [a-zA-Z0-9]+)*  {
-
       if(b.length===0) {
           return ("@"+a.join('')).toLowerCase();
-      } else {
+      } else if(b.length===1) {
           return ("@"+a.join('')+"-"+b[0][1].join('')).toLowerCase();
+      } else {
+          var rest = '';
+          for(var i=0; i<b.length; i++) {
+              rest = rest + "-"+b[i][1].join('')
+          }
+          return ("@"+a.join('')+rest).toLowerCase();
       }
 }
 

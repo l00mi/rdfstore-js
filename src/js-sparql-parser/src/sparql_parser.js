@@ -6417,7 +6417,7 @@ SparqlParser.parser = (function(){
       }
       
       function parse_ExpressionList() {
-        var result0, result1, result2, result3, result4, result5, result6;
+        var result0, result1, result2, result3, result4;
         var pos0, pos1, pos2;
         
         reportFailures++;
@@ -6451,41 +6451,19 @@ SparqlParser.parser = (function(){
             if (result1 !== null) {
               result2 = [];
               pos2 = pos;
-              result3 = [];
-              result4 = parse_WS();
-              while (result4 !== null) {
-                result3.push(result4);
-                result4 = parse_WS();
+              if (input.charCodeAt(pos) === 44) {
+                result3 = ",";
+                pos++;
+              } else {
+                result3 = null;
+                if (reportFailures === 0) {
+                  matchFailed("\",\"");
+                }
               }
               if (result3 !== null) {
-                if (input.charCodeAt(pos) === 44) {
-                  result4 = ",";
-                  pos++;
-                } else {
-                  result4 = null;
-                  if (reportFailures === 0) {
-                    matchFailed("\",\"");
-                  }
-                }
+                result4 = parse_ConditionalOrExpression();
                 if (result4 !== null) {
-                  result5 = [];
-                  result6 = parse_WS();
-                  while (result6 !== null) {
-                    result5.push(result6);
-                    result6 = parse_WS();
-                  }
-                  if (result5 !== null) {
-                    result6 = parse_ConditionalOrExpression();
-                    if (result6 !== null) {
-                      result3 = [result3, result4, result5, result6];
-                    } else {
-                      result3 = null;
-                      pos = pos2;
-                    }
-                  } else {
-                    result3 = null;
-                    pos = pos2;
-                  }
+                  result3 = [result3, result4];
                 } else {
                   result3 = null;
                   pos = pos2;
@@ -6497,41 +6475,19 @@ SparqlParser.parser = (function(){
               while (result3 !== null) {
                 result2.push(result3);
                 pos2 = pos;
-                result3 = [];
-                result4 = parse_WS();
-                while (result4 !== null) {
-                  result3.push(result4);
-                  result4 = parse_WS();
+                if (input.charCodeAt(pos) === 44) {
+                  result3 = ",";
+                  pos++;
+                } else {
+                  result3 = null;
+                  if (reportFailures === 0) {
+                    matchFailed("\",\"");
+                  }
                 }
                 if (result3 !== null) {
-                  if (input.charCodeAt(pos) === 44) {
-                    result4 = ",";
-                    pos++;
-                  } else {
-                    result4 = null;
-                    if (reportFailures === 0) {
-                      matchFailed("\",\"");
-                    }
-                  }
+                  result4 = parse_ConditionalOrExpression();
                   if (result4 !== null) {
-                    result5 = [];
-                    result6 = parse_WS();
-                    while (result6 !== null) {
-                      result5.push(result6);
-                      result6 = parse_WS();
-                    }
-                    if (result5 !== null) {
-                      result6 = parse_ConditionalOrExpression();
-                      if (result6 !== null) {
-                        result3 = [result3, result4, result5, result6];
-                      } else {
-                        result3 = null;
-                        pos = pos2;
-                      }
-                    } else {
-                      result3 = null;
-                      pos = pos2;
-                    }
+                    result3 = [result3, result4];
                   } else {
                     result3 = null;
                     pos = pos2;
@@ -15433,11 +15389,16 @@ SparqlParser.parser = (function(){
         }
         if (result0 !== null) {
           result0 = (function(offset, a, b) {
-        
               if(b.length===0) {
                   return ("@"+a.join('')).toLowerCase();
-              } else {
+              } else if(b.length===1) {
                   return ("@"+a.join('')+"-"+b[0][1].join('')).toLowerCase();
+              } else {
+                  var rest = '';
+                  for(var i=0; i<b.length; i++) {
+                      rest = rest + "-"+b[i][1].join('')
+                  }
+                  return ("@"+a.join('')+rest).toLowerCase();
               }
         })(pos0, result0[1], result0[2]);
         }
