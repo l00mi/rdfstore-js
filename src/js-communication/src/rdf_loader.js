@@ -4,7 +4,7 @@ var RDFLoader = exports.RDFLoader;
 
 // imports
 var NetworkTransport = require("./tcp_transport").NetworkTransport;
-var N3Parser = require("./rvn3_parser").RVN3Parser;
+var RVN3Parser = require("./rvn3_parser").RVN3Parser;
 var RDFXMLParser = require("./rdfxml_parser").RDFXMLParser;
 var JSONLDParser = require("./jsonld_parser").JSONLDParser;
 var Utils = require("../../js-trees/src/utils").Utils;
